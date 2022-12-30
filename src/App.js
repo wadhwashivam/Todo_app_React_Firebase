@@ -13,7 +13,7 @@ function App() {
 //useEffect is a hook and it runs once the app loads.
   useEffect(() =>{
     db.collection('todos').orderBy('timestamp','desc').onSnapshot(snapshot => {
-      setTodos(snapshot.docs.map(doc => doc.data().todo))
+      setTodos(snapshot.docs.map(doc => ({id: doc.id ,todo: doc.data().todo})))
     })
   //this code here... fires when the app.js loads
   },[]);
@@ -56,9 +56,9 @@ function App() {
         </Button>
         <ul>
           {/* Here we are using the map method which just loop through the todos array and do what is in its block. */}
-          {todos.map((todo) => (
+          {todos.map(todo => (
           //  Here we are using the props component of react.
-           <Todo text = {todo}/>
+           <Todo todo = {todo}/>
           ))}
         </ul>
       </form>
